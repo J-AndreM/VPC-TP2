@@ -1,7 +1,4 @@
-close;
-clear all;
-clc;
-
+close; clear; clc;
 %% ************************************** Alínea 1 ************************************** %%
 I = imread('cameraman.tif');
 
