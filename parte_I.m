@@ -159,6 +159,7 @@ subplot(2,4,2); plot(squeeze(Speckle_imp(2,:)),'b'); title('Filtro de Média'); g
 subplot(2,4,5); plot(squeeze(Speckle_imp(3,:)),'g'); title('Filtro Gaussiano'); grid on; axis([0,256,-5,280]);
 subplot(2,4,6); plot(squeeze(Speckle_imp(4,:)),'r'); title('Filtro de Mediana'); grid on; axis([0,256,-5,280]);
 
+
 % % % Alínea c) Influência do desvio padrão % % %
 % Cria novos filtros com diferentes valores do desvio padrão
 h_gauss2 = fspecial('gaussian',[3 3],2);
@@ -167,8 +168,7 @@ h_gauss3 = fspecial('gaussian',[3 3],5);
 % Aplica os filtros
 Gauss_gauss2 = imfilter(Gauss, h_gauss2);
 Gauss_gauss3 = imfilter(Gauss, h_gauss3);
-
-% Apresenta as imagens
+% Apresenta as imagens com ruído Gaussiano
 for i=1:4
     if i==1, figure('Name','Ruído Gaussiano - med=0, var=2');
     elseif i==2, figure('Name','Ruído Gaussiano - med=0, var=20');
@@ -180,6 +180,53 @@ for i=1:4
     subplot(2,2,3); imshow(squeeze(Gauss_gauss2(i,:,:))); title('Sigma = 2');
     subplot(2,2,4); imshow(squeeze(Gauss_gauss3(i,:,:))); title('Sigma = 5');
 end
+
+% Aplica os filtros
+SaltP_gauss2 = imfilter(SaltP, h_gauss2);
+SaltP_gauss3 = imfilter(SaltP, h_gauss3);
+% Apresenta as imagens com ruído 'Salt & Pepper'
+for i=1:2
+    if i==1, figure('Name','Ruído ''Salt & Pepper'' - med=0, var=2');
+    else, figure('Name','Ruído ''Salt & Pepper'' - med=10, var=20');
+    end 
+    subplot(2,2,1); imshow(squeeze(SaltP(i,:,:))); title('Imagem com ruído');
+    subplot(2,2,2); imshow(squeeze(SaltP_gauss(i,:,:))); title('Sigma por defeito');
+    subplot(2,2,3); imshow(squeeze(SaltP_gauss2(i,:,:))); title('Sigma = 2');
+    subplot(2,2,4); imshow(squeeze(SaltP_gauss3(i,:,:))); title('Sigma = 5');
+end
+
+% Aplica os filtros
+Speckle_gauss2 = imfilter(Speckle, h_gauss2);
+Speckle_gauss3 = imfilter(Speckle, h_gauss3);
+% Apresenta as imagens com ruído ‘Speckle’
+figure('Name','Ruído ''Speckle'' - variância=0.8');
+subplot(2,2,1); imshow(Speckle); title('Imagem com ruído');
+subplot(2,2,2); imshow(Speckle_gauss); title('Sigma por defeito');
+subplot(2,2,3); imshow(Speckle_gauss2); title('Sigma = 2');
+subplot(2,2,4); imshow(Speckle_gauss3); title('Sigma = 5');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
