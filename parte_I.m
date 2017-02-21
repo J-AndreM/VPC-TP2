@@ -53,47 +53,113 @@ end
 
 Speckle_med =  medfilt2(Speckle);
 
-%% Imprime as imagens %%
+% % Imprime as imagens % %
+% ############################################################################## %
 % Imagem com ruído Gaussiano
 for i=1:4
     if i==1, figure('Name','Ruído Gaussiano - med=0, var=2');
     elseif i==2, figure('Name','Ruído Gaussiano - med=0, var=20');
     elseif i==3, figure('Name','Ruído Gaussiano - med=10, var=2');
     else, figure('Name','Ruído Gaussiano - med=10, var=20');
-    end
-    
+    end  
     subplot(2,2,1); imshow(squeeze(Gauss(i,:,:))); title('Imagem com ruído');
     subplot(2,2,2); imshow(squeeze(Gauss_mean(i,:,:))); title('Filtro de Média');
     subplot(2,2,3); imshow(squeeze(Gauss_gauss(i,:,:))); title('Filtro Gaussiano');
     subplot(2,2,4); imshow(squeeze(Gauss_med(i,:,:))); title('Filtro de Mediana');
 end
 
+% ############################################################################## %
 % Imagem com ruído ‘salt & pepper’
 for i=1:2
     if i==1, figure('Name','Ruído ''Salt & Pepper'' - densidade=0.1');
     else, figure('Name','Ruído ''Salt & Pepper'' - densidade=0.5');
-    end
-    
+    end   
     subplot(2,2,1); imshow(squeeze(SaltP(i,:,:))); title('Imagem com ruído');
     subplot(2,2,2); imshow(squeeze(SaltP_mean(i,:,:))); title('Filtro de Média');
     subplot(2,2,3); imshow(squeeze(SaltP_gauss(i,:,:))); title('Filtro Gaussiano');
     subplot(2,2,4); imshow(squeeze(SaltP_med(i,:,:))); title('Filtro de Mediana');
 end
 
-
-% Imagem com ruído ‘salt & pepper’
+% ############################################################################## %
+% Imagem com ruído ‘Speckle’
 figure('Name','Ruído ''Speckle'' - variância=0.8');
 subplot(2,2,1); imshow(Speckle); title('Imagem com ruído');
 subplot(2,2,2); imshow(Speckle_mean); title('Filtro de Média');
 subplot(2,2,3); imshow(Speckle_gauss); title('Filtro Gaussiano');
 subplot(2,2,4); imshow(Speckle_med); title('Filtro de Mediana');
 
+% % % Alínea a) 'improfile' - vamos utilizar uma linha de cada imagem % % %
+% ############################################################################## %
+% Ruído Gaussiano
+Gauss_imp = double(zeros(4,4,256));
+for i=1:4
+    % Cálculo
+    Gauss_imp(i,1,:)=improfile(squeeze(Gauss(i,:,:)),[1 256],[100 100]);
+    Gauss_imp(i,2,:)=improfile(squeeze(Gauss_mean(i,:,:)),[1 256],[100 100]);
+    Gauss_imp(i,3,:)=improfile(squeeze(Gauss_gauss(i,:,:)),[1 256],[100 100]);
+    Gauss_imp(i,4,:)=improfile(squeeze(Gauss_med(i,:,:)),[1 256],[100 100]);
 
 
+    if i==1, figure('Name','Ruído Gaussiano - med=0, var=2');
+    elseif i==2, figure('Name','Ruído Gaussiano - med=0, var=20');
+    elseif i==3, figure('Name','Ruído Gaussiano - med=10, var=2');
+    else, figure('Name','Ruído Gaussiano - med=10, var=20');
+    end
+    
+    subplot(1,2,2); hold on; grid on; title('Comparação'); axis([0,256,-5,280]);
+    plot(squeeze(Gauss_imp(i,1,:)),'k'); plot(squeeze(Gauss_imp(i,2,:)),'b');
+    plot(squeeze(Gauss_imp(i,3,:)),'g'); plot(squeeze(Gauss_imp(i,4,:)),'r');
+    legend('Imagem com ruído','Filtro de Média','Filtro Gaussiano','Filtro de Mediana');
+    subplot(2,4,1); plot(squeeze(Gauss_imp(i,1,:)),'k'); title('Imagem com ruído'); grid on; axis([0,256,-5,280]);
+    subplot(2,4,2); plot(squeeze(Gauss_imp(i,2,:)),'b'); title('Filtro de Média'); grid on; axis([0,256,-5,280]);
+    subplot(2,4,5); plot(squeeze(Gauss_imp(i,3,:)),'g'); title('Filtro Gaussiano'); grid on; axis([0,256,-5,280]);
+    subplot(2,4,6); plot(squeeze(Gauss_imp(i,4,:)),'r'); title('Filtro de Mediana'); grid on; axis([0,256,-5,280]);
+end
 
+% ############################################################################## %
+% Imagem com ruído ‘salt & pepper’
+SaltP_imp = double(zeros(2,4,256));
+for i=1:2
+    % Cálculo
+    SaltP_imp(i,1,:)=improfile(squeeze(SaltP(i,:,:)),[1 256],[100 100]);
+    SaltP_imp(i,2,:)=improfile(squeeze(SaltP_mean(i,:,:)),[1 256],[100 100]);
+    SaltP_imp(i,3,:)=improfile(squeeze(SaltP_gauss(i,:,:)),[1 256],[100 100]);
+    SaltP_imp(i,4,:)=improfile(squeeze(SaltP_med(i,:,:)),[1 256],[100 100]);
 
+    if i==1, figure('Name','Ruído ''Salt & Pepper'' - med=0, var=2');
+    else, figure('Name','Ruído ''Salt & Pepper'' - med=10, var=20');
+    end
+    
+    subplot(1,2,2); hold on; grid on; title('Comparação'); axis([0,256,-5,280]);
+    plot(squeeze(SaltP_imp(i,1,:)),'k'); plot(squeeze(SaltP_imp(i,2,:)),'b');
+    plot(squeeze(SaltP_imp(i,3,:)),'g'); plot(squeeze(SaltP_imp(i,4,:)),'r');
+    legend('Imagem com ruído','Filtro de Média','Filtro Gaussiano','Filtro de Mediana');
+    subplot(2,4,1); plot(squeeze(SaltP_imp(i,1,:)),'k'); title('Imagem com ruído'); grid on; axis([0,256,-5,280]);
+    subplot(2,4,2); plot(squeeze(SaltP_imp(i,2,:)),'b'); title('Filtro de Média'); grid on; axis([0,256,-5,280]);
+    subplot(2,4,5); plot(squeeze(SaltP_imp(i,3,:)),'g'); title('Filtro Gaussiano'); grid on; axis([0,256,-5,280]);
+    subplot(2,4,6); plot(squeeze(SaltP_imp(i,4,:)),'r'); title('Filtro de Mediana'); grid on; axis([0,256,-5,280]);
+end
 
+% ############################################################################## %
+% Imagem com ruído ‘salt & pepper’
+Speckle_imp = double(zeros(4,256));
+% Cálculo
+Speckle_imp(1,:)=improfile(squeeze(Speckle(:,:)),[1 256],[100 100]);
+Speckle_imp(2,:)=improfile(squeeze(Speckle_mean(:,:)),[1 256],[100 100]);
+Speckle_imp(3,:)=improfile(squeeze(Speckle_gauss(:,:)),[1 256],[100 100]);
+Speckle_imp(4,:)=improfile(squeeze(Speckle_med(:,:)),[1 256],[100 100]);
 
+figure('Name','Ruído ''Speckle'' -  variância=0.8');
+subplot(1,2,2); hold on; grid on; title('Comparação'); axis([0,256,-5,280]);
+plot(squeeze(Speckle_imp(1,:)),'k'); plot(squeeze(Speckle_imp(2,:)),'b');
+plot(squeeze(Speckle_imp(3,:)),'g'); plot(squeeze(Speckle_imp(4,:)),'r');
+legend('Imagem com ruído','Filtro de Média','Filtro Gaussiano','Filtro de Mediana');
+subplot(2,4,1); plot(squeeze(Speckle_imp(1,:)),'k'); title('Imagem com ruído'); grid on; axis([0,256,-5,280]);
+subplot(2,4,2); plot(squeeze(Speckle_imp(2,:)),'b'); title('Filtro de Média'); grid on; axis([0,256,-5,280]);
+subplot(2,4,5); plot(squeeze(Speckle_imp(3,:)),'g'); title('Filtro Gaussiano'); grid on; axis([0,256,-5,280]);
+subplot(2,4,6); plot(squeeze(Speckle_imp(4,:)),'r'); title('Filtro de Mediana'); grid on; axis([0,256,-5,280]);
+
+% % % Alínea c) Influência do desvio padrão % % %
 
 
 
