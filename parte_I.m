@@ -211,11 +211,13 @@ KKK = MED_FILTER(squeeze(SaltP(2,:,:)),7);
 figure;
 subplot(1,3,1)
 imshow(squeeze(SaltP(2,:,:)))
+title('Imagem com ruído')
 subplot(1,3,2)
 imshow(squeeze(SaltP_med(2,:,:)))
+title('Filtro Mediana do matlab')
 subplot(1,3,3)
 imshow(KKK)
-
+title('Filtro Mediana criado')
 
 
 
