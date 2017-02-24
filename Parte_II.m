@@ -15,3 +15,17 @@ imshow(B_sobel)
 imshow(B_lapla)
 imshow(B_log)
 imshow(BI)
+
+%
+BW = edge(I,'Canny');
+figure('Name','edge com Canny')
+imshow(BW)
+BW = edge(I,'Sobel');
+figure('Name','edge com Sobel')
+imshow(BW)
+BW = edge(I,'log');
+figure('Name','edge com log')
+imshow(BW)
+BW = edge(I,'zerocross',0.1,h_log);
+figure('Name','edge com zerocross')
+imshow(BW)
