@@ -17,15 +17,15 @@ BI = edge(I,'Canny');
 figure('Name','Resultado da Filtragem')
 subplot(2,2,1)
 imshow(B_sobel)
-title('sobel');
+title('Sobel');
 
 subplot(2,2,2)
 imshow(B_lapla)
-title('laplacian');
+title('Laplaciano');
 
 subplot(2,2,3)
 imshow(B_log)
-title('log');
+title('LoG');
 
 subplot(2,2,4)
 imshow(BI)
@@ -64,6 +64,26 @@ subplot(2,3,6)
 imshow(atan2(double(B_log_y), double(B_log)));
 title('Fase LoG')
 
+
+%% Vetor do gradiente
+figure('Name','Resultado da Filtragem')
+subplot(1,3,1)
+imshow(B_sobel)
+hold on
+quiver(B_sobel,B_sobel_y,4,'color',[0.5 1 0])
+title('Sobel');
+
+subplot(1,3,2)
+imshow(B_lapla)
+hold on
+quiver(B_lapla,B_lapla_y,4,'color',[1 1 0.5])
+title('Laplaciano');
+
+subplot(1,3,3)
+imshow(B_log)
+hold on
+quiver(B_log,B_log_y,4,'color',[1 0.5 0])
+title('LoG');
 
 %%
 
