@@ -1,11 +1,13 @@
-%% 
+close; clear; clc;
+%% Lê a imagem
 I = imread('cameraman.tif');
 
-% criar mascaras
+%% cria mascaras
 h_sobel = fspecial('sobel');
 h_lapla = fspecial('laplacian');
 h_log   = fspecial('log');
-% aolicar filtros
+
+%% aplica os filtros
 B_sobel = imfilter(I,h_sobel);
 B_lapla = imfilter(I,h_lapla);
 B_log   = imfilter(I,h_log);
@@ -30,43 +32,37 @@ imshow(BI)
 title('Canny');
 
 
-%% Modulo e fase
-
+%% Módulo e fase
+% Calcula a Fase
 B_sobel_y = imfilter(I,h_sobel');
 B_lapla_y = imfilter(I,h_lapla');
 B_log_y   = imfilter(I,h_log');
 
-
-figure('Name','Modulos')
-subplot(1,3,1)
+% Apresenta os resultados
+figure('Name','Módulo e Fase')
+% % Sobel
+subplot(2,3,1)
 imshow(abs(B_sobel));
-title('sobel')
-
-subplot(1,3,2)
-imshow(abs(B_lapla));
-title('laplassian')
-
-subplot(1,3,3)
-imshow(abs(B_log));
-title('log')
-
-
-
-figure('Name','Fases')
-subplot(1,3,1)
+title('Módulo Sobel')
+subplot(2,3,4)
 imshow(atan2(double(B_sobel_y), double(B_sobel)));
-title('sobel')
+title('Fase Sobel')
 
-subplot(1,3,2)
+% % Laplaciano
+subplot(2,3,2)
+imshow(abs(B_lapla));
+title('Módulo Laplaciano')
+subplot(2,3,5)
 imshow(atan2(double(B_lapla_y), double(B_lapla)));
-title('laplassian')
+title('Fase Laplaciano')
 
-subplot(1,3,3)
+% % Laplaciano da Gaussiana
+subplot(2,3,3)
+imshow(abs(B_log));
+title('Módulo LoG')
+subplot(2,3,6)
 imshow(atan2(double(B_log_y), double(B_log)));
-title('log')
-
-
-
+title('Fase LoG')
 
 
 %%
