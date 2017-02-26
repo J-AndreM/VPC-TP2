@@ -66,20 +66,6 @@ imshow(atan2(double(B_log_y), double(B_log)));
 title('Fase LoG')
 
 
-
-
-%%
-
-% detetar arestas
-figure('Name','Detectores de Arestas')
-subplot(2,2,1)
-BW = edge(I,'Canny');
-imshow(BW)
-title('Canny');
-%
-subplot(2,2,2)
-BW = edge(I,'Sobel');
-imshow(BW)
 %% Vetor do gradiente
 figure('Name','Resultado da Filtragem')
 subplot(1,3,1)
@@ -120,6 +106,7 @@ subplot(2,2,4); imshow(edge_c); title('Canny');
 
 
 %% Histogramas
+s = size(I);
 [xx,yy]=gradient(double(edge_s));
 hist_s=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
 [xx,yy]=gradient(double(edge_z));
@@ -129,7 +116,6 @@ hist_l=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
 [xx,yy]=gradient(double(edge_c));
 hist_c=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
 
-s = size(I);
 figure('Name','Histograma')
 % Contornos - Sobel
 subplot(2,2,1); hist(hist_s,8); title('Sobel');
