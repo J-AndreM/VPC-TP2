@@ -10,6 +10,7 @@ B_sobel = imfilter(I,h_sobel);
 B_lapla = imfilter(I,h_lapla);
 B_log   = imfilter(I,h_log);
 BI = edge(I,'Canny');
+
 % ver resultado
 figure('Name','Resultado da Filtragem')
 subplot(2,2,1)
@@ -27,6 +28,42 @@ title('log');
 subplot(2,2,4)
 imshow(BI)
 title('Canny');
+
+
+%% Modulo e fase
+
+B_sobel_y = imfilter(I,h_sobel');
+B_lapla_y = imfilter(I,h_lapla');
+B_log_y   = imfilter(I,h_log');
+
+
+figure('Name','Modulos')
+subplot(1,3,1)
+imshow(abs(B_sobel));
+title('sobel')
+
+subplot(1,3,2)
+imshow(abs(B_lapla));
+title('laplassian')
+
+subplot(1,3,3)
+imshow(abs(B_log));
+title('log')
+
+
+
+figure('Name','Fases')
+subplot(1,3,1)
+imshow(atan2(double(B_sobel_y), double(B_sobel)));
+title('sobel')
+
+subplot(1,3,2)
+imshow(atan2(double(B_lapla_y), double(B_lapla)));
+title('laplassian')
+
+subplot(1,3,3)
+imshow(atan2(double(B_log_y), double(B_log)));
+title('log')
 
 
 
