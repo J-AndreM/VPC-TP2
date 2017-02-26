@@ -2,6 +2,7 @@ close; clear; clc;
 %% Lê a imagem
 I = imread('cameraman.tif');
 
+%% ************************************** Alínea 5 ************************************** %%
 %% cria mascaras
 h_sobel = fspecial('sobel');
 h_lapla = fspecial('laplacian');
@@ -85,29 +86,43 @@ hold on
 quiver(B_log,B_log_y,4,'color',[1 0.5 0])
 title('LoG');
 
-%%
+%% ************************************** Alínea 6 ************************************** %%
+% Contornos com a função edge
+edge_s = edge(I,'sobel');
+edge_z = edge(I,'zerocross');
+edge_l = edge(I,'log');
+edge_c = edge(I,'canny');
 
-% detetar arestas
+%% Apresenta as imagens
 figure('Name','Detectores de Arestas')
-subplot(2,2,1)
-BW = edge(I,'Canny');
-imshow(BW)
-title('Canny');
-%
-subplot(2,2,2)
-BW = edge(I,'Sobel');
-imshow(BW)
-title('Sobel');
-%
-subplot(2,2,3)
-BW = edge(I,'log');
-imshow(BW)
-title('log');
-%
-subplot(2,2,4)
-BW = edge(I,'zerocross');
-imshow(BW)
-title('zerocross');
+% Contornos - Sobel
+subplot(2,2,1); imshow(edge_s); title('Sobel');
+% Contornos - ZeroCross
+subplot(2,2,2); imshow(edge_z); title('ZeroCross');
+% Contornos - Laplaciano da Gaussiana
+subplot(2,2,3); imshow(edge_l); title('LoG');
+% Contornos - Canny
+subplot(2,2,4); imshow(edge_c); title('Canny');
 
 
+%% Histogramas
+[xx,yy]=gradient(double(edge_s));
+hist_s=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
+[xx,yy]=gradient(double(edge_z));
+hist_z=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
+[xx,yy]=gradient(double(edge_l));
+hist_l=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
+[xx,yy]=gradient(double(edge_c));
+hist_c=reshape(rad2deg(atan2(xx,yy)), s(1), s(2));
+
+s = size(I);
+figure('Name','Histograma')
+% Contornos - Sobel
+subplot(2,2,1); hist(hist_s,8); title('Sobel');
+% Contornos - ZeroCross
+subplot(2,2,2); hist(hist_z,8); title('ZeroCross');
+% Contornos - Laplaciano da Gaussiana
+subplot(2,2,3); hist(hist_l,8); title('LoG');
+% Contornos - Canny
+subplot(2,2,4); hist(hist_c,8); title('Canny');
 
