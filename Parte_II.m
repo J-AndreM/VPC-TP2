@@ -65,6 +65,8 @@ imshow(atan2(double(B_log_y), double(B_log)));
 title('Fase LoG')
 
 
+
+
 %%
 
 % detetar arestas
