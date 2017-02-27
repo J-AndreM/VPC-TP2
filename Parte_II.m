@@ -126,3 +126,11 @@ subplot(2,2,3); hist(hist_l,8); title('LoG');
 % Contornos - Canny
 subplot(2,2,4); hist(hist_c,8); title('Canny');
 
+
+%% Extracção de contornos utilizando o operador Sobel
+figure('Name', 'Extração de Contornos - Sobel')
+subplot(2,2,1); imshow(extracao_Sobel(I,50)); title('Sobel - Limiar = 50');
+subplot(2,2,2); imshow(extracao_Sobel(I,100)); title('Sobel - Limiar = 100');
+subplot(2,2,3); imshow(extracao_Sobel(I,150)); title('Sobel - Limiar = 150');
+subplot(2,2,4); imshow(extracao_Sobel(I,200)); title('Sobel - Limiar = 200');
+
